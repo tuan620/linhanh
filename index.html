@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Trái Tim Thùy Linh</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: #1a0010;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100dvh;
+      font-family: 'Georgia', serif;
+      position: relative;
+    }
+
+    /* Nền gradient */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, #3d0020 0%, #1a0010 70%);
+      z-index: -1;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(16px, 4vw, 36px);
+      padding: clamp(20px, 5vw, 40px) clamp(12px, 4vw, 30px);
+      width: 100%;
+      max-width: 480px;
+      z-index: 1;
+    }
+
+    /* ===== TÊN TRÊN ===== */
+    .name {
+      font-size: clamp(1.6rem, 7vw, 3rem);
+      font-weight: bold;
+      color: #ff4d6d;
+      text-shadow:
+        0 0 10px #ff4d6d,
+        0 0 30px #ff1a40,
+        0 0 60px #ff0033;
+      letter-spacing: clamp(3px, 1.5vw, 7px);
+      text-align: center;
+      animation: glow 1.5s ease-in-out infinite alternate;
+      white-space: nowrap;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff1a40, 0 0 40px #ff0033;
+      }
+      to {
+        text-shadow: 0 0 20px #ff6680, 0 0 50px #ff4d6d, 0 0 100px #ff1a40;
+      }
+    }
+
+    /* ===== WRAPPER TRÁI TIM ===== */
+    .heart-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* kích thước responsive */
+      width: clamp(200px, 65vw, 320px);
+      height: clamp(185px, 60vw, 295px);
+    }
+
+    /* ===== SVG TIM ===== */
+    .heart-svg {
+      width: 100%;
+      height: 100%;
+      animation: heartbeat 0.8s ease-in-out infinite;
+      filter: drop-shadow(0 0 16px #ff0033) drop-shadow(0 0 40px #ff4d6d);
+    }
+
+    @keyframes heartbeat {
+      0%   { transform: scale(1); }
+      14%  { transform: scale(1.18); }
+      28%  { transform: scale(1); }
+      42%  { transform: scale(1.12); }
+      70%  { transform: scale(1); }
+      100% { transform: scale(1); }
+    }
+
+    /* ===== TÊN TRONG TIM ===== */
+    .heart-name {
+      position: absolute;
+      font-size: clamp(1rem, 4.5vw, 1.7rem);
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 8px #fff, 0 0 18px #ffaabb;
+      letter-spacing: clamp(2px, 1vw, 4px);
+      pointer-events: none;
+      animation: heartbeat 0.8s ease-in-out infinite;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* ===== VÒNG SÓNG ===== */
+    .pulse-ring {
+      position: absolute;
+      width: 105%;
+      height: 105%;
+      border-radius: 50%;
+      border: 2px solid #ff4d6d;
+      animation: pulse-out 0.8s ease-out infinite;
+      opacity: 0;
+    }
+
+    .pulse-ring:nth-child(2) { animation-delay: 0.4s; }
+
+    @keyframes pulse-out {
+      0%   { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+
+    /* ===== CHỮ THÌNH THỊCH ===== */
+    .beat-text {
+      font-size: clamp(0.7rem, 3vw, 1rem);
+      color: #ff6680;
+      letter-spacing: clamp(4px, 2vw, 10px);
+      text-transform: uppercase;
+      text-align: center;
+      animation: blink 0.8s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      14%       { opacity: 1;   transform: scale(1.1); }
+      28%       { opacity: 0.4; transform: scale(1); }
+      42%       { opacity: 1;   transform: scale(1.05); }
+    }
+
+    /* ===== INTRO / MÀN HÌNH CHỜ ===== */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #1a0010;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #intro-overlay.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .intro-heart {
+      width: clamp(80px, 25vw, 140px);
+      height: clamp(74px, 23vw, 130px);
+      animation: introPulse 0.7s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px #ff0033) drop-shadow(0 0 50px #ff4d6d);
+    }
+
+    @keyframes introPulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.15); }
+    }
+
+    /* ===== HIỆU ỨNG XUẤT HIỆN TỪNG PHẦN ===== */
+
+    /* Trạng thái ẩn ban đầu */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(0.85);
+    }
+
+    /* Khi được kích hoạt */
+    .reveal.visible {
+      animation: revealIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Tên xuất hiện từ trên xuống */
+    .reveal-name {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    .reveal-name.visible {
+      animation: revealDown 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Tim xuất hiện từ nhỏ ra lớn + nảy */
+    .reveal-heart {
+      opacity: 0;
+      transform: scale(0.1);
+    }
+    .reveal-heart.visible {
+      animation: revealHeart 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Chữ thình thịch xuất hiện từ dưới lên */
+    .reveal-beat {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .reveal-beat.visible {
+      animation: revealIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes revealIn {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes revealDown {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes revealHeart {
+      0%   { opacity: 0; transform: scale(0.1) rotate(-10deg); }
+      60%  { opacity: 1; transform: scale(1.15) rotate(3deg); }
+      80%  { transform: scale(0.95) rotate(-2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    /* ===== HẠT BAY ===== */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatParticle {
+      0%   { transform: translateY(100vh) scale(0); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
+
+    /* ===== TIM NHỎ BAY ===== */
+    @keyframes floatHeart {
+      0%   { transform: translateY(0) scale(0.5) rotate(-10deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translateY(-40vh) scale(1) rotate(10deg); opacity: 0.8; }
+      100% { transform: translateY(-95vh) scale(0.3) rotate(-5deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Màn hình intro -->
+  <div id="intro-overlay">
+    <svg class="intro-heart" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="introGrad" cx="50%" cy="40%" r="60%">
+          <stop offset="0%"   stop-color="#ff6680"/>
+          <stop offset="50%"  stop-color="#ff1a40"/>
+          <stop offset="100%" stop-color="#990020"/>
+        </radialGradient>
+      </defs>
+      <path d="M50 85 C50 85, 5 55, 5 28 C5 12, 17 3, 30 3 C38 3, 46 8, 50 15
+               C54 8, 62 3, 70 3 C83 3, 95 12, 95 28 C95 55, 50 85, 50 85 Z"
+            fill="url(#introGrad)"/>
+    </svg>
+  </div>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+
+    <div class="name reveal-name"> Tặng Thùy Linh </div>
+
+    <div class="heart-wrapper reveal-heart">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+
+      <svg class="heart-svg" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="heartGrad" cx="50%" cy="40%" r="60%">
+            <stop offset="0%"   stop-color="#ff6680"/>
+            <stop offset="50%"  stop-color="#ff1a40"/>
+            <stop offset="100%" stop-color="#990020"/>
+          </radialGradient>
+          <filter id="glow-filter">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <path
+          d="M50 85
+             C50 85, 5 55, 5 28
+             C5 12, 17 3, 30 3
+             C38 3, 46 8, 50 15
+             C54 8, 62 3, 70 3
+             C83 3, 95 12, 95 28
+             C95 55, 50 85, 50 85 Z"
+          fill="url(#heartGrad)"
+          filter="url(#glow-filter)"
+        />
+        <!-- Ánh sáng phản chiếu -->
+        <ellipse cx="35" cy="25" rx="10" ry="7"
+          fill="rgba(255,255,255,0.15)"
+          transform="rotate(-30 35 25)"/>
+      </svg>
+
+      <span class="heart-name">Thùy Linh</span>
+    </div>
+
+    <div class="beat-text reveal-beat">thình &nbsp;thịch &nbsp;thình &nbsp;thịch</div>
+
+  </div>
+
+  <script>
+    // === Hiệu ứng intro: tim đập 1.5s rồi fade out, sau đó reveal từng phần ===
+    const overlay = document.getElementById('intro-overlay');
+    const nameEl  = document.querySelector('.reveal-name');
+    const heartEl = document.querySelector('.reveal-heart');
+    const beatEl  = document.querySelector('.reveal-beat');
+
+    // Ẩn overlay sau 1.8s
+    setTimeout(() => {
+      overlay.classList.add('hide');
+
+      // Tên xuất hiện trước
+      setTimeout(() => nameEl.classList.add('visible'), 200);
+
+      // Tim xuất hiện sau — hiệu ứng nảy to
+      setTimeout(() => heartEl.classList.add('visible'), 600);
+
+      // Chữ thình thịch xuất hiện sau cùng
+      setTimeout(() => beatEl.classList.add('visible'), 1200);
+    }, 1800);
+    // === Hạt bụi bay ===
+    const particleContainer = document.getElementById('particles');
+    const colors = ['#ff4d6d', '#ff1a40', '#ff80a0', '#ffb3c6', '#ff0033'];
+
+    for (let i = 0; i < 35; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 7 + 3;
+      p.style.width  = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left   = Math.random() * 100 + 'vw';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.animationDuration = (Math.random() * 6 + 5) + 's';
+      p.style.animationDelay    = (Math.random() * 8) + 's';
+      particleContainer.appendChild(p);
+    }
+
+    // === Tim nhỏ bay lên ===
+    function createHeartParticle() {
+      const heart = document.createElement('span');
+      heart.textContent = '❤';
+      const sz = Math.random() * 18 + 10;
+      heart.style.cssText = `
+        position: fixed;
+        font-size: ${sz}px;
+        left: ${Math.random() * 95}vw;
+        bottom: -30px;
+        color: #ff4d6d;
+        opacity: 0;
+        animation: floatHeart ${Math.random() * 4 + 5}s ease-in forwards;
+        pointer-events: none;
+        z-index: 2;
+        text-shadow: 0 0 8px #ff4d6d;
+        line-height: 1;
+      `;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9500);
+    }
+
+    setInterval(createHeartParticle, 700);
+  </script>
+</body>
+</html>
